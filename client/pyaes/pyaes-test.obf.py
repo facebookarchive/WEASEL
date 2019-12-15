@@ -147,13 +147,13 @@ def main():
     key = b'abcdefghij123456abcdefghij123456'
 
     aes128ctr = I(key, b'0123456789123456')
-    plaintext = "Text may be any length you wish, no padding is required"
+    plaintext = "Text may be any length you wish, no padding is required."
     ciphertext = aes128ctr.p(plaintext)
 
     print(repr(ciphertext))
 
     # The counter mode of operation maintains state, so decryption requires
-    # a new instance be created
+    # a new instance to be created.
     aes128ctr = I(key, b'0123456789123456')
     decrypted = aes128ctr.P(ciphertext)
 
