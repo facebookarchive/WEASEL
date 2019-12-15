@@ -117,7 +117,7 @@ which is both less suspicious and RFC compliant.
 
 A **response (from the server)** is comprised of one or more AAAA answers.
 
-Each AAAA answer is a 16 byte encrypted payload represented as an IPv6 address
+Each AAAA answer is a 16 bytes encrypted payload represented as an IPv6 address
 using `socket.inet_ntop`. Answers in a DNS response do not maintain their order in
 transit, so they are sequenced and reassembled like the client requests.
 
@@ -152,9 +152,9 @@ the beacon will initiate a new session.
 Initiating a session involves the client crafting a message with a uniquely
 identifying non-data preamble (to signal to the server that this is a new
 session): the concatenation of a 32 bytes Diffie-Hellman public key and a 16
-byte random AES IV.
+bytes random AES IV.
 
-The server receives this and responds with its own 32 byte public key. At this
+The server receives this and responds with its own 32 bytes public key. At this
 point the client and server have established a shared session key that will be
 used for the lifetime of this session to encrypt data payloads using AES-128 in
 CTR mode. The Diffie-Hellman Ephemeral exchange ensures each client-server
@@ -165,12 +165,12 @@ connection uses a unique session key with forward secrecy.
 The crypto is purposefully bad for a number of reasons:
 
 * We are emulating real attackers who generally have little clue how to build
-  robust crypto systems and are fans of rolling their own
+  robust crypto systems and are fans of rolling their own.
 * The bandwidth of beacon is as low as possible, which means our DHE exchange
-  must be kept very small
-* Non-attribution is important, we don't authenticate the server
+  must be kept very small.
+* Non-attribution is important, we don't authenticate the server.
 * It is less fun for responders if we use state of the art crypto they can't
-  hope to break
+  hope to break.
 
 Here are some known issues with the crypto scheme:
 
@@ -192,15 +192,15 @@ Here are some known issues with the crypto scheme:
 ### Streams
 
 Each message sent between a client and server has to be packetized into max 50
-byte packets, in order to stay under that 52 byte limit for common DNS covert
+bytes packets, in order to stay under that 52 bytes limit for common DNS covert
 channel detections. All packets for a particular message are part of the same
 stream. Message == Stream.
 
-Streams are identified with a 2 byte random hex number. Recall the client
+Streams are identified with a 2 bytes random hex number. Recall the client
 request format is:
 ```<preamble><data>.<stream>.<session>.domain.tld```
 
-The 2 byte preamble of each packet in the stream has a sequence number and the
+The 2 bytes preamble of each packet in the stream has a sequence number and the
 total number of packets in that stream. This enables the server to know when
 everything has arrived. 
 
