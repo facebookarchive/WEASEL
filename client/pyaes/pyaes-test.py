@@ -180,7 +180,7 @@ class AES128CTR(object):
        o A stream-cipher, so input does not need to be padded to blocks,
          allowing arbitrary length data.
        o The counter must be the same size as the key size (ie. len(key)).
-       o Each block independant of the other, so a corrupt byte will not
+       o Each block independent of the other, so a corrupt byte will not
          damage future blocks.
        o Each block has a unique counter value associated with it, which
          contributes to the encrypted value, so no data patterns are
