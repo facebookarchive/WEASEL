@@ -6,10 +6,10 @@ server until a beacon comes along.
 ## How it works
 
 It uses [dnslib](https://pypi.org/project/dnslib/) to run a rudimentary
-nameserver and programmatically control every answer. This enables it to do
+nameserver and programmatically controls every answer. This enables it to do
 funky stuff like support a set of static DNS records (like a regular DNS
 server) while also responding with dynamic AAAA answers if it detects an
-inbound query is coming from a beacon.
+inbound query coming from a beacon.
 
 It exposes a commandline interface (REPL) that has tab completion and pretty
 printing of all the beacons it knows about. Through the REPL an operator can
@@ -39,7 +39,7 @@ $ pip3 install -r requirements.txt
    UDP.
 
     Note that you should probably not change PORT from 53 since that is where
-    DNS queries for your domain will go. You can may want to change it to
+    DNS queries for your domain will go. You may want to change it to
     another port if you are using a redirector or port forwarding, but I
     recommend leaving it on 53 even with redirectors.
 
@@ -50,7 +50,7 @@ $ pip3 install -r requirements.txt
 
 4. Set STATIC_RECORDS for your zone(s). At a minimum, you'll want to be
    authoritative for the C2 domains pointed at this server. That means each
-   domain will need an SOA, NS, and A record. You can add additional records if
+   domain will need SOA, NS, and A records. You can add additional records if
    you want to serve up non-WEASEL things from the same domain.
 
 5. Run it as root. Dnslib needs this for raw socket() access.
