@@ -179,14 +179,12 @@ Here are some known issues with the crypto scheme:
    Group 5 is already deprecated and recommended against.
    I call this bad decision "Group 1".
 2. We use random.randint() for the exponent `a` instead of a CSPRNG.
-3. We use os.urandom() for IV generation instead of a CSPRNG.
-4. We use os.urandom() for session ID and stream ID generation instead of a
-   PRNG or UUID. In general urandom is a trustworthy enough source, but we are
-   operating in a high level language on systems we can't trust.
-5. The AES-CTR cipher is re-initialized with the same IV (which is long lived
+3. We use a small amount of data from os.urandom() for session ID and stream ID generation instead of a
+   UUID, meaning collisions are likely. We account for this by retrying until we get an ID that isn't being used.
+4. The AES-CTR cipher is re-initialized with the same IV (which is long lived
    like the session key) for every stream. This means that the same plaintext
    in the same position across streams will produce the same ciphertext.
-6. In AES-CTR the IV is correctly called a nonce, but in our implementation we
+5. In AES-CTR the IV is correctly called a nonce, but in our implementation we
    aren't using the number once so it would be a bit rude to call it that.
 
 ### Streams
